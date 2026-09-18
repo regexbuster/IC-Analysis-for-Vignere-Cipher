@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <errno.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
 #include "frequency.h"
 
 int CalcFrequency(freq_data_t* freqData, FILE* inputFile) {
@@ -39,11 +40,15 @@ double CalcIC(freq_data_t* freqData) {
     return sum;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]){
+    if (argc < 2){
+        printf("Usage: analysis [OPTION]...\n");
+        exit(1);
+    }
     if (argc == 2){
         freq_data_t freqData = {0};
 
-        FILE* inputFile = fopen(argv[1], "r");
+        FILE* inputFile = fopen(argv[2], "r");
         if (inputFile == NULL) {
             perror("Error On Input File Name");
             exit(errno);
@@ -66,5 +71,5 @@ int main(int argc, char *argv[]) {
         printf("%.4f IC_english\n", CalcIC(&freqData));
     } else {
         printf("Usage: frequency [IN_FILENAME]\n");
-    }
+    }   
 }
