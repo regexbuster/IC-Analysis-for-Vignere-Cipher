@@ -54,5 +54,8 @@ void VignereDecrypt(char* key, char* ciphertext, char* ctBuffer){
 }
 
 int main(int argc, char* argv[]){
-    
+    if (argc < 4){
+        printf("Usage: vignere [enc/dec] [KEY] [MESSAGE]\n");
+        exit(1);
+    }
 }

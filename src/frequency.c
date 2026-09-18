@@ -42,34 +42,31 @@ double CalcIC(freq_data_t* freqData) {
 
 int main(int argc, char* argv[]){
     if (argc < 2){
-        printf("Usage: analysis [OPTION]...\n");
+        printf("Usage: frequency [INPUTFILE]\n");
         exit(1);
     }
-    if (argc == 2){
-        freq_data_t freqData = {0};
 
-        FILE* inputFile = fopen(argv[2], "r");
-        if (inputFile == NULL) {
-            perror("Error On Input File Name");
-            exit(errno);
-        }
+    freq_data_t freqData = {0};
 
-        int res = CalcFrequency(&freqData, inputFile);
+    FILE* inputFile = fopen(argv[2], "r");
+    if (inputFile == NULL) {
+        perror("Error On Input File Name");
+        exit(errno);
+    }
 
-        fclose(inputFile);
+    int res = CalcFrequency(&freqData, inputFile);
 
-        if (res == 1){
-            printf("No suitable letters found.");
-            exit(1);
-        }
+    fclose(inputFile);
 
-        for (int i = 0; i < 26; i++){
-            printf("%c: %.2f%% \n", (char) ('a' + i), ((freqData.frequencies[i]) * 100));
-        }
-        printf("%d total letters analyzed\n", freqData.total);
+    if (res == 1){
+        printf("No suitable letters found.");
+        exit(1);
+    }
 
-        printf("%.4f IC_english\n", CalcIC(&freqData));
-    } else {
-        printf("Usage: frequency [IN_FILENAME]\n");
-    }   
+    for (int i = 0; i < 26; i++){
+        printf("%c: %.2f%% \n", (char) ('a' + i), ((freqData.frequencies[i]) * 100));
+    }
+    printf("%d total letters analyzed\n", freqData.total);
+
+    printf("%.4f IC_english\n", CalcIC(&freqData));  
 }
