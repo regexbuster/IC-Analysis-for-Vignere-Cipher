@@ -85,6 +85,9 @@ int main(int argc, char* argv[]){
         exit(1);
     }
 
+    // ensure enc/dec instead of possible ENC/DEC
+    strToLower(argv[1]);
+
     if (!strcmp("enc", argv[1])){
         strToLower(argv[2]);
         strToLower(argv[3]);
